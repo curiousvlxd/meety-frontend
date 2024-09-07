@@ -1,6 +1,18 @@
-import Header from "./ui/header/header";
+"use client";
 
-export default async function Home() {
+import useCreateModal from "./hooks/useCreateModal";
+import useInvitationsModal from "./hooks/useInvitationsModal";
+import useMeetingsModal from "./hooks/useMeetingsModal";
+import Header from "./ui/header/header";
+import InvitationsModal from "./ui/modals/invitations-modal";
+import MeetingsModal from "./ui/modals/meetings-modal";
+import ProfileModal from "./ui/modals/profile-modal";
+
+export default function Home() {
+  const meetingsModal = useMeetingsModal();
+  const invitationsModal = useInvitationsModal();
+  const createMeeting = useCreateModal();
+
   return (
     <main className="
       w-full
@@ -10,6 +22,7 @@ export default async function Home() {
       lg:py-[100px]
       lg:px-[100px]
     ">
+      
       <Header />
 
       <div
@@ -27,57 +40,20 @@ export default async function Home() {
         >
           <div className="
             w-full
-            lg:flex
-            lg:flex-row
-            lg:justify-between
-            lg:w-full
-            gap-4
+            gap-[60px]
             grid
             sm:grid-cols-2
             grid-cols-1
           ">
 
-            <div>
+            <div
+              onClick={() => invitationsModal.onOpen()}
+            >
 
               <h4
                 className="uppercase font-medium"
               >
-                user
-              </h4>
-
-              <div
-                className="
-                bg-white
-                rounded-md
-                p-[24px]
-                flex
-                items-center
-                cursor-pointer
-                hover:opacity-[.7]
-              "
-              >
-                <h4
-                  className="p-10 w-[20px] h-[20px] rounded-full bg-blue-100 flex items-center justify-center text-2xl lg:text-4xl"
-                >
-                  👨‍💼
-                </h4>
-                <div className="ml-2">
-                  <h1 className="font-bold text-xl">
-                    User info
-                  </h1>
-                  <h5 className="opacity-[.7]">
-                    Settings
-                  </h5>
-                </div>
-              </div>
-            </div>
-
-            <div>
-
-              <h4
-                className="uppercase font-medium"
-              >
-                history
+                invitations
               </h4>
               <div
                 className="
@@ -93,11 +69,47 @@ export default async function Home() {
                 <h4
                   className="p-10 w-[20px] h-[20px] rounded-full bg-red-100 flex items-center justify-center text-2xl lg:text-4xl"
                 >
+                  📑
+                </h4>
+                <div className="ml-2">
+                  <h1 className="font-medium text-xl lg:text-2xl">
+                    History
+                  </h1>
+                  <h5 className="opacity-[.7]">
+                    Check all the invitations
+                  </h5>
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() => meetingsModal.onOpen()}
+            >
+
+              <h4
+                className="uppercase font-medium"
+              >
+                meetings
+              </h4>
+              <div
+                className="
+                  bg-white
+                  rounded-md
+                  p-[24px]
+                  flex
+                  items-center
+                  cursor-pointer
+                  hover:opacity-[.7]
+                "
+              >
+                <h4
+                  className="p-10 w-[20px] h-[20px] rounded-full bg-green-100 flex items-center justify-center text-2xl lg:text-4xl"
+                >
                   🗒️
                 </h4>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl lg:text-2xl">
-                    Archive
+                  <h1 className="font-medium text-xl lg:text-2xl">
+                    History
                   </h1>
                   <h5 className="opacity-[.7]">
                     Check all the meetings
@@ -106,7 +118,9 @@ export default async function Home() {
               </div>
             </div>
 
-            <div>
+            <div
+              onClick={() => createMeeting.onOpen()}
+            >
 
               <h4
                 className="uppercase font-medium"
@@ -130,7 +144,7 @@ export default async function Home() {
                   ➕
                 </h4>
                 <div className="ml-2">
-                  <h1 className="font-bold text-xl">
+                  <h1 className="font-medium text-xl">
                     New meeting
                   </h1>
                   <h5 className="opacity-[.7]">
@@ -150,15 +164,11 @@ export default async function Home() {
           rounded-md
           mt-[24px]
         ">
-          <div>
-            <h1
-              className="text-3xl text-center font-medium mt-4"
-            >Meeting title</h1>
-
-            <iframe src="https://us05web.zoom.us/j/85172946594?pwd=X0Gcfem74Zp941yU3K4fPkwWZKo38U.1" width={1000} height={500}></iframe>
-          </div>
         </div>
       </div>
+      <ProfileModal />
+      <MeetingsModal />
+      <InvitationsModal />
     </main>
   );
 }
